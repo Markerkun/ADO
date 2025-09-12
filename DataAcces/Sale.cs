@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _02_CRUD_Interface
 {
-    internal class Sale
+    public class Sale
     {
         public int Id { get; set; }
         public string ProductId { get; set; }
