@@ -30,9 +30,9 @@ namespace _02_CRUD_Interface
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            connection.Close();
         }
-        private List<Sale> GetSalesByQuery(SqlDataReader reader)
+        private List<Sale> GetProductsByQuery(SqlDataReader reader)
         {
             //Console.OutputEncoding = Encoding.UTF8;
             List<Sale> products = new List<Sale>();
@@ -41,10 +41,11 @@ namespace _02_CRUD_Interface
                 products.Add(
                     new Sale()
                     {
+                        Id = (int)reader[0],
                         ProductId = (int)reader[0],
-                        Price = (int)reader[1],
-                        Quantity = (int)reader[2],
-                        EmployeeId = (int)reader[3],
+                        Price = (string)reader[1],
+                        EmployeeId = (int)reader[2],
+                        Quantity = (int)reader[3],
                         ClientId = (int)reader[4],
                         SaleDate = (string)reader[5]
                     });
@@ -52,7 +53,8 @@ namespace _02_CRUD_Interface
             reader.Close();
             return products;
         }
-        public List<Sale> ReadProducts()
+
+        public List<Sale> Read_Get_All()
         {
             string cmdText = $@"select * from Products";
             SqlCommand command = new SqlCommand(cmdText, connection);

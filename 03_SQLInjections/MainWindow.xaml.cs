@@ -35,7 +35,7 @@ namespace _03_SQLInjections
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            dataGrid.ItemsSource = db.ReadProducts();
+            dataGrid.ItemsSource = db.Read_Get_All();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

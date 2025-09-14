@@ -9,14 +9,14 @@ namespace _02_CRUD_Interface
     public class Sale
     {
         public int Id { get; set; }
-        public string ProductId { get; set; }
+        public int ProductId { get; set; }
         public string Price { get; set; }
-        public string Quantity { get; set; }
-        public string EmployeeId { get; set; }
+        public int Quantity { get; set; }
+        public int EmployeeId { get; set; }
 
         public int ClientId { get; set; }
 
-        public int SaleDate { get; set; }
+        public string SaleDate { get; set; }
 
         public override string ToString()
         {
