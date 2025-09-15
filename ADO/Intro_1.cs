@@ -9,10 +9,20 @@ namespace _01_ConnectedMode
     {
 
 
-        static void ReadData(SqlCommand command)
+        void ReadData(SqlCommand command)
         {
-            Console.OutputEncoding = Encoding.UTF8;
             SqlDataReader reader = command.ExecuteReader();
+
+            Console.OutputEncoding = Encoding.UTF8;
+
+            //// відображається назви всіх колонок таблиці
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                Console.Write($" {reader.GetName(i),14}");
+            }
+            Console.WriteLine("\n---------------------------------------------------------------------------------------------------------------------");
+
+            //////// відображаємо всі значення кожного рядка
             while (reader.Read())
             {
 
@@ -22,14 +32,53 @@ namespace _01_ConnectedMode
                 }
                 Console.WriteLine();
             }
-            reader.Close();
 
+            reader.Close();
+        }
+
+        void GetAllClients(SqlConnection sqlConnection)
+        {
+            string cmdText = $@"select * from Clients";
+
+
+            SqlCommand command = new SqlCommand(cmdText, sqlConnection);
+
+            ReadData(command);  
+        }
+        
+        void GetAllSellers(SqlConnection sqlConnection)
+        {
+            string cmdText = $@"select * from Employee";
+
+
+            SqlCommand command = new SqlCommand(cmdText, sqlConnection);
+            ReadData(command);
+        }
+        
+        void GetSellsWithSeller(SqlConnection sqlConnection, string Surname, string FirstName, string SecondName)
+        {
+            string cmdText = $@"select * from Selles AS S
+                        JOIN Employees AS E ON S.EmployeeId = E.id
+                        WHERE E.FullName = '{Surname + ' ' + FirstName + ' ' + SecondName}'";
+
+
+            SqlCommand command = new SqlCommand(cmdText, sqlConnection);
+            ReadData(command);
+        }
+
+        void GetSellsMoreThan(SqlConnection sqlConnection, int num)
+        {
+            string cmdText = $@"select * from Salles
+                                WHERE Price > {num}";
+
+
+            SqlCommand command = new SqlCommand(cmdText, sqlConnection);
+            ReadData(command);
         }
 
 
 
-
-        static void Main(string[] args)
+         void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
 
@@ -42,19 +91,17 @@ namespace _01_ConnectedMode
 
             
             //1
-            string cmdText1 = $@"select * from Clients";
-            //2
-            string cmdText2 = $@"select * from Employees";
+                        //2
+            
             //3
-            string cmdText3 = $@"select * from Salles AS S
-                        JOIN Employees AS E ON S.EmployeeId = E.id
-                        WHERE E.FullName = 'Михальчук Руслана Романівна'";
+            
             //4
             Console.WriteLine("Enter sum of Salles: ");
-            int sum = int.Parse(Console.ReadLine());
+            int num = int.Parse(Console.ReadLine());
+            GetSellsMoreThan(sqlConnection, num);
 
-            string cmdText4 = $@"select * from Salles
-                         WHERE Price > {sum}";
+
+
             //5
             string cmdText5 = $@"select top 1 S.Price from Clients AS C
                         JOIN Salles AS S ON C.id = S.ClientId
