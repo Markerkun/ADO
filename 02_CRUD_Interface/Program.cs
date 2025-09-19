@@ -23,12 +23,12 @@ namespace _02_CRUD_Interface
 
                 db.CreateAsInsert(new Sale()
                 {
-                    ProductId = 6,
-                    Price = "200",
+                    ProductId = 2,
+                    Price = 200,
                     Quantity = 2,
                     EmployeeId = 1,
                     ClientId = 1,
-                    SaleDate = "2024-06-10"
+                    SaleDate =new DateTime(2000,5,7)
                 });
 
                 Console.WriteLine("-------------------");
@@ -51,12 +51,12 @@ namespace _02_CRUD_Interface
 
                 Console.WriteLine("-------------------");
 
-                db.Get_Employees();
+                List<Employees> employees = db.Get_Employees();
                 db.DeleteEmployee(3);
 
                 Console.WriteLine("-------------------");
 
-                db.Get_Clients();
+                clients = db.Get_Clients();
                 db.DeleteClient(2);
 
                 Console.WriteLine("-------------------");

@@ -15,11 +15,11 @@ namespace _02_CRUD_Interface
         public void CreateAsInsert(Sale sale)
         {
             string cmdText = $@"INSERT INTO Salles
-                              VALUES ('{sale.ProductId}', 
-                                      '{sale.Price}',
+                              VALUES ({sale.ProductId}, 
+                                      {sale.Price},
                                        {sale.Quantity}, 
                                        {sale.EmployeeId}, 
-                                      '{sale.ClientId}', 
+                                      {sale.ClientId}, 
                                        {sale.SaleDate})";
 
             SqlCommand command = new SqlCommand(cmdText, connection);
@@ -43,11 +43,11 @@ namespace _02_CRUD_Interface
                     {
                         Id = (int)reader[0],
                         ProductId = (int)reader[1],
-                        Price = (string)reader[2],
+                        Price = (int)reader[2],
                         EmployeeId = (int)reader[3],
                         Quantity = (int)reader[4],
                         ClientId = (int)reader[5],
-                        SaleDate = (string)reader[6]
+                        SaleDate = (DateTime)reader[6]
                     });
             }
             reader.Close();
