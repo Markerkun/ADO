@@ -20,7 +20,7 @@ namespace _02_CRUD_Interface
 
         public override string ToString()
         {
-            return $"{ProductId,3}  {Price,15} {Quantity,7} {EmployeeId,3} {ClientId,3} {SaleDate,12}";
+            return $"{ProductId,3} {Price,15} {Quantity,7} {EmployeeId,3} {ClientId,3} {SaleDate,12}";
         }
     }
 }
