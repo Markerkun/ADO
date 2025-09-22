@@ -30,6 +30,15 @@ namespace _18_LINQ
             var leapYears = years.Where(y => y%4==0).ToArray();
             //4
             var num2 = numbers.Where(n=>n%2==0).OrderByDescending(n => n).Take(1);
+            //5
+            string[] words = { "apple", "banana", "cherry", "date", "fig", "grape" };
+            var NewWords = words.Select(w => w + "!!!").ToArray();
+            //6
+            char symbol = 'a';
+            var count = words.Select(w => w.Contains(symbol)).ToArray();
+            //7
+            var group = words.GroupBy(w => w.Length);
+
 
 
 
