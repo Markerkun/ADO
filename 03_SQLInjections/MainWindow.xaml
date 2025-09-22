@@ -8,11 +8,10 @@
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
             <ToolBar DockPanel.Dock="Top">
-                <Button Click="Button_Click">Load Products</Button>
+                <Button Click="Button_Click">Load Salles</Button>
                 <Button Click="Button_Click_1">Load Clients</Button>
-                <Button Click="Button_Click_3">Load Employees</Button>
-                <Button Click="Button_Click_4">Load Salles</Button>
-            </ToolBar>
+                <Button Click="Button_Click_2">Load Employees</Button>
+        </ToolBar>
             <DataGrid Name="dataGrid"></DataGrid>
 
 

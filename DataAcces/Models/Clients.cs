@@ -14,7 +14,7 @@ namespace DataAcces.Models
         public string Phone { get; set; }
         public int PercentSale { get; set; }
         public string Gender { get; set; }
-        public byte Subscribe { get; set; }
+        public bool Subscribe { get; set; }
         public override string ToString()
         {
             return $"{FullName,50} {Email,20} {Phone,15} {PercentSale,5} {Gender,7} {Subscribe,10}";

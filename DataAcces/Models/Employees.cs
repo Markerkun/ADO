@@ -10,9 +10,9 @@ namespace DataAcces.Models
     {
         public int Id { get; set; }
         public string FullName { get; set; }
-        public string HireDate { get; set; }
+        public DateTime HireDate { get; set; }
         public string Gender { get; set; }
-        public int Salary { get; set; }
+        public decimal Salary { get; set; }
         public override string ToString()
         {
             return $"{FullName,50} {HireDate,15} {Gender,7} {Salary,10}";

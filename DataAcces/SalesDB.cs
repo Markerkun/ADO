@@ -43,7 +43,7 @@ namespace _02_CRUD_Interface
                     {
                         Id = (int)reader[0],
                         ProductId = (int)reader[1],
-                        Price = (int)reader[2],
+                        Price = (decimal)reader[2],
                         EmployeeId = (int)reader[3],
                         Quantity = (int)reader[4],
                         ClientId = (int)reader[5],
@@ -64,9 +64,9 @@ namespace _02_CRUD_Interface
                     {
                         Id = (int)reader[0],
                         FullName = (string)reader[1],
-                        HireDate = (string)reader[2],
+                        HireDate = (DateTime)reader[2],
                         Gender = (string)reader[3],
-                        Salary = (int)reader[4]
+                        Salary = (decimal)reader[4]
                     });
             }
             reader.Close();
@@ -84,9 +84,9 @@ namespace _02_CRUD_Interface
                         FullName = (string)reader[1],
                         Email = (string)reader[2],
                         Phone = (string)reader[3],
-                        PercentSale = (int)reader[4],
-                        Gender = (string)reader[5],
-                        Subscribe = (byte)reader[6]
+                        Gender = (string)reader[4],
+                        PercentSale = (int)reader[5],
+                        Subscribe = (bool)reader[6]
                     });
             }
             reader.Close();
@@ -116,6 +116,14 @@ namespace _02_CRUD_Interface
             SqlDataReader reader = command.ExecuteReader();
             return GetClientsByQuery(reader);
         }
+        public List<Sale> Get_Sales()
+        {
+            string cmdText = $@"select * from Salles";
+            SqlCommand command = new SqlCommand(cmdText, connection);
+            SqlDataReader reader = command.ExecuteReader();
+            return GetSallesByQuery(reader);
+        }
+        
 
         public List<Clients> Get_ClientSaleByName(string Fullname)
         {

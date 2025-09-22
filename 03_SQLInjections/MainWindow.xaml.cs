@@ -35,27 +35,18 @@ namespace _03_SQLInjections
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            dataGrid.ItemsSource = db.Read_Get_All();
+            dataGrid.ItemsSource = db.Get_Sales();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            dataGrid.ItemsSource = db.Get_Clients(); 
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-
+            dataGrid.ItemsSource = db.Get_Employees();
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_4(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
