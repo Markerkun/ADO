@@ -19,5 +19,6 @@ namespace FinalWork.Entities
         public string Surname { get; set; }
         public Country Country { get; set; }
         public int CountryId { get; set; }
+        public ICollection<Book> Books { get; set; }
     }
 }

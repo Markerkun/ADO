@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FinalWork.Entities;
 
-namespace _05_Entityframework.Entities
+namespace FinalWork.Entities
 {
     internal class Country
     {
