@@ -19,8 +19,14 @@ namespace FinalWork.Entities
         public int PublisherId { get; set; }
         public int Pages { get; set; }
         public string Genre { get; set; }
-        
-        
+        public int Year { get; set; }
+        public decimal Price { get; set; }
+        public decimal PriceForSale { get; set; }
+        public Book NextChapter { get; set; }
+        public int? NextChapterId { get; set; }
+
+
+
 
     }
 }
