@@ -10,9 +10,7 @@ namespace FinalWork.Entities
     internal class Book
     {
         public int Id { get; set; }
-
-        [Required]
-        public string Name { get; set; }
+        public string Title { get; set; }
         public Author Author { get; set; }
         public int AuthorId { get; set; }
         public Publisher Publisher { get; set; }
@@ -26,7 +24,10 @@ namespace FinalWork.Entities
         public Book NextChapter { get; set; }
         public int? NextChapterId { get; set; }
 
-
+        void ToString()
+        {
+            Console.WriteLine($"Id: {Id}, Title: {Title}, Author: {Author.Name} {Author.Surname}, Publisher: {Publisher.Name}, Pages: {Pages}, Genre: {Genre.Name}, Year: {Year}, Price: {Price}, PriceForSale: {PriceForSale}, NextChapterId: {NextChapterId}");
+        }
 
 
     }
