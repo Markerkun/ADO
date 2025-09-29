@@ -14,7 +14,54 @@ namespace FinalWork
 {
     internal class BookShopDbContext : DbContext
     {
-
+        Book CreateBook(string title, Author author, Publisher publisher, int pages, Genre genre, int year, decimal price, decimal priceForSale, Book nextChapter = null)
+        {
+            var book = new Book
+            {
+                Title = title,
+                Author = author,
+                Publisher = publisher,
+                Pages = pages,
+                Genre = genre,
+                Year = year,
+                Price = price,
+                PriceForSale = priceForSale,
+                NextChapter = nextChapter
+            };
+            return book;
+        }
+        Book AddBook(Book book)
+        {
+            var addedBook = this.Books.Add(book);
+            this.SaveChanges();
+            return addedBook.Entity;
+        }
+        void DeleteBook(int id)
+        {
+            var book = this.Books.Find(id);
+            if (book != null)
+            {
+                this.Books.Remove(book);
+                this.SaveChanges();
+            }
+        }
+        void UpdateBook(int id, string title = null, Author author = null, Publisher publisher = null, int? pages = null, Genre genre = null, int? year = null, decimal? price = null, decimal? priceForSale = null, Book nextChapter = null)
+        {
+            var book = this.Books.Find(id);
+            if (book != null)
+            {
+                if (title != null) book.Title = title;
+                if (author != null) book.Author = author;
+                if (publisher != null) book.Publisher = publisher;
+                if (pages != null) book.Pages = pages.Value;
+                if (genre != null) book.Genre = genre;
+                if (year != null) book.Year = year.Value;
+                if (price != null) book.Price = price.Value;
+                if (priceForSale != null) book.PriceForSale = priceForSale.Value;
+                if (nextChapter != null) book.NextChapter = nextChapter;
+                this.SaveChanges();
+            }
+        }
         void FindBookByName(string name)
         {
             var books = this.Set<Book>()
@@ -45,9 +92,6 @@ namespace FinalWork
                 book.ToString();
             }
         }
-
-
-
 
 
 
@@ -130,5 +174,9 @@ namespace FinalWork
 
         }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Book> Books { get; set; }
     }
 }
