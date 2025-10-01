@@ -23,10 +23,12 @@ namespace FinalWork.Entities
         public decimal PriceForSale { get; set; }
         public Book NextChapter { get; set; }
         public int? NextChapterId { get; set; }
+        public int Discount { get; set; }
+        public ICollection<Client>? Clients { get; set; }
 
         void ToString()
         {
-            Console.WriteLine($"Id: {Id}, Title: {Title}, Author: {Author.Name} {Author.Surname}, Publisher: {Publisher.Name}, Pages: {Pages}, Genre: {Genre.Name}, Year: {Year}, Price: {Price}, PriceForSale: {PriceForSale}, NextChapterId: {NextChapterId}");
+            Console.WriteLine($"Id: {Id}, Title: {Title}, Author: {Author.Name} {Author.Surname}, Publisher: {Publisher.Name}, Pages: {Pages}, Genre: {Genre.Name}, Year: {Year}, Price: {Price}, PriceForSale: {PriceForSale}, NextChapterId: {NextChapterId}, Discount {Discount}");
         }
 
 

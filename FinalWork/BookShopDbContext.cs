@@ -62,6 +62,41 @@ namespace FinalWork
                 this.SaveChanges();
             }
         }
+
+        void SetDiscount(int id, int discount)
+        {
+            var book = this.Books.Find(id);
+            if (book != null)
+            {
+                book.Discount = discount;
+                book.PriceForSale = book.Price - (book.Price * discount / 100);
+                this.SaveChanges();
+            }
+        }
+
+        void AsideForBuyer(int bookId, Client client)
+        {
+            var book = this.Books.Find(bookId);
+            if (book != null)
+            {
+                if (book.Clients == null)
+                {
+                    book.Clients = new List<Client>();
+                }
+                book.Clients.Add(client);
+
+                this.SaveChanges();
+            }
+        }
+
+
+
+
+
+
+
+
+
         void FindBookByName(string name)
         {
             var books = this.Set<Book>()
@@ -91,6 +126,23 @@ namespace FinalWork
             {
                 book.ToString();
             }
+        }
+
+        List<Book> ShowNewBooks()
+        {
+            var books = this.Set<Book>()
+                .Where(b => b.Year >= DateTime.Now.Year - 1)
+                .ToList();
+            return books;
+        }
+
+        List<Book> PopularBooks()
+        {
+            var books = this.Set<Book>()
+                .OrderByDescending(b => b.Clients.Count)
+                .Take(10)
+                .ToList();
+            return books;
         }
 
 
@@ -127,6 +179,10 @@ namespace FinalWork
                 .HasOne(a => a.Country)
                 .WithMany(c => c.Authors)
                 .HasForeignKey(a => a.CountryId);
+
+            modelBuilder.Entity<Author>()
+                .HasMany(a => a.Followers)
+                .WithMany(f => f.FollowedAuthors);
 
 
             modelBuilder.Entity<Country>()
@@ -169,6 +225,33 @@ namespace FinalWork
                 .WithMany(a => a.Books)
                 .HasForeignKey(b => b.AuthorId);
 
+            modelBuilder.Entity<Book>()
+                .HasMany(b => b.Clients)
+                .WithMany(c => c.Books);
+
+
+            modelBuilder.Entity<Client>()
+                .Property(c => c.FullName)
+                .HasMaxLength(30)
+                .IsRequired();
+
+            modelBuilder.Entity<Client>()
+                .Property(c => c.Email)
+                .HasMaxLength(30)
+                .IsRequired();
+
+            modelBuilder.Entity<Client>()
+                .Property(c => c.PhoneNumber)
+                .HasMaxLength(15)
+                .IsRequired();
+
+            modelBuilder.Entity<Client>()
+                .HasMany(c => c.Books)
+                .WithMany(b => b.Clients);
+
+            modelBuilder.Entity<Client>()
+                .HasMany(c => c.FollowedAuthors)
+                .WithMany(a => a.Followers);
 
 
 
@@ -178,5 +261,6 @@ namespace FinalWork
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Client> Clients { get; set; }
     }
 }
