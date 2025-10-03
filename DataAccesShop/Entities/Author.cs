@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FinalWork.Entities
 {
-    internal class Author
+    public class Author
     {
         public int Id { get; set; }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FinalWork.Entities
 {
-    internal class Publisher
+    public class Publisher
     {
         public int Id { get; set; }
         public string Name { get; set; }

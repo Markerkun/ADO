@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FinalWork.Entities
 {
-    internal class Book
+    public class Book
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -25,11 +25,11 @@ namespace FinalWork.Entities
         public int? NextChapterId { get; set; }
         public int Discount { get; set; }
         public ICollection<Client>? Clients { get; set; }
-
-        void ToString()
+        public override string ToString()
         {
-            Console.WriteLine($"Id: {Id}, Title: {Title}, Author: {Author.Name} {Author.Surname}, Publisher: {Publisher.Name}, Pages: {Pages}, Genre: {Genre.Name}, Year: {Year}, Price: {Price}, PriceForSale: {PriceForSale}, NextChapterId: {NextChapterId}, Discount {Discount}");
-        }
+            return $"Id: {Id}, Title: {Title}, Author: {Author?.Name} {Author?.Surname}, Publisher: {Publisher?.Name}, Pages: {Pages}, Genre: {Genre?.Name}, Year: {Year}, Price: {Price}, PriceForSale: {PriceForSale}, NextChapterId: {NextChapterId}, Discount {Discount}";
+        }  
+
 
 
     }

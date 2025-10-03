@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FinalWork.Entities
 {
-    internal class Client
+    public class Client
     {
         public int Id { get; set; }
         public string FullName { get; set; }

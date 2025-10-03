@@ -9,72 +9,67 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FinalWork.Entities;
+using DataAccesShop.Helpers;
 
 namespace FinalWork
 {
-    internal class BookShopDbContext : DbContext
+    public class BookShopDbContext : DbContext
     {
-        Book CreateBook(string title, Author author, Publisher publisher, int pages, Genre genre, int year, decimal price, decimal priceForSale, Book nextChapter = null)
+        public Book CreateBook(string title, int authorId, int publisherId, int pages, int genreId, int year, decimal price, decimal priceForSale)
         {
             var book = new Book
             {
                 Title = title,
-                Author = author,
-                Publisher = publisher,
+                AuthorId = authorId,
+                PublisherId = publisherId,
                 Pages = pages,
-                Genre = genre,
+                GenreId = genreId,
                 Year = year,
                 Price = price,
-                PriceForSale = priceForSale,
-                NextChapter = nextChapter
+                PriceForSale = priceForSale
             };
             return book;
         }
-        Book AddBook(Book book)
+        public Book AddBook(Book book)
         {
             var addedBook = this.Books.Add(book);
-            this.SaveChanges();
             return addedBook.Entity;
         }
-        void DeleteBook(int id)
+        public void DeleteBook(int id)
         {
             var book = this.Books.Find(id);
             if (book != null)
             {
                 this.Books.Remove(book);
-                this.SaveChanges();
             }
         }
-        void UpdateBook(int id, string title = null, Author author = null, Publisher publisher = null, int? pages = null, Genre genre = null, int? year = null, decimal? price = null, decimal? priceForSale = null, Book nextChapter = null)
+        public void UpdateBook(int id, string title, int authorId, int publisherId, int pages, int genreId, int year, decimal price, decimal priceForSale)
         {
             var book = this.Books.Find(id);
             if (book != null)
             {
-                if (title != null) book.Title = title;
-                if (author != null) book.Author = author;
-                if (publisher != null) book.Publisher = publisher;
-                if (pages != null) book.Pages = pages.Value;
-                if (genre != null) book.Genre = genre;
-                if (year != null) book.Year = year.Value;
-                if (price != null) book.Price = price.Value;
-                if (priceForSale != null) book.PriceForSale = priceForSale.Value;
-                if (nextChapter != null) book.NextChapter = nextChapter;
-                this.SaveChanges();
+                book.Title = title;
+                book.AuthorId = authorId;
+                book.PublisherId = publisherId;
+                book.Pages = pages;
+                book.GenreId = genreId;
+                book.Year = year;
+                book.Price = price;
+                book.PriceForSale = priceForSale;
             }
         }
 
-        void SetDiscount(int id, int discount)
+        public void SetDiscount(int id, int discount)
         {
             var book = this.Books.Find(id);
             if (book != null)
             {
                 book.Discount = discount;
                 book.PriceForSale = book.Price - (book.Price * discount / 100);
-                this.SaveChanges();
             }
         }
 
-        void AsideForBuyer(int bookId, Client client)
+        public void AsideForBuyer(int bookId, Client client)
         {
             var book = this.Books.Find(bookId);
             if (book != null)
@@ -84,8 +79,15 @@ namespace FinalWork
                     book.Clients = new List<Client>();
                 }
                 book.Clients.Add(client);
+            }
+        }
 
-                this.SaveChanges();
+        public void ShowAllBooks()
+        {
+            var books = this.Set<Book>().Include(b=>b.Author).ToList();
+            foreach (var book in books)
+            {
+                Console.WriteLine(book);
             }
         }
 
@@ -95,40 +97,38 @@ namespace FinalWork
 
 
 
-
-
-        void FindBookByName(string name)
+        public void FindBookByName(string name)
         {
             var books = this.Set<Book>()
                 .Where(b => b.Title.Contains(name))
                 .ToList();
             foreach (var book in books)
             {
-                book.ToString();
+                Console.WriteLine(book);
             }
         }
-        void FindBooksByAuthor(string authorName)
+        public void FindBooksByAuthor(string authorName)
         {
             var books = this.Set<Book>()
                 .Where(b => b.Author.Name.Contains(authorName) || b.Author.Surname.Contains(authorName))
                 .ToList();
             foreach (var book in books)
             {
-                book.ToString();
+                Console.WriteLine(book);
             }
         }
-        void FindBooksByGenre(string genreName)
+        public void FindBooksByGenre(string genreName)
         {
             var books = this.Set<Book>()
                 .Where(b => b.Genre.Name.Contains(genreName))
                 .ToList();
             foreach (var book in books)
             {
-                book.ToString();
+                Console.WriteLine(book);
             }
         }
 
-        List<Book> ShowNewBooks()
+        public List<Book> ShowNewBooks()
         {
             var books = this.Set<Book>()
                 .Where(b => b.Year >= DateTime.Now.Year - 1)
@@ -136,7 +136,7 @@ namespace FinalWork
             return books;
         }
 
-        List<Book> PopularBooks()
+        public List<Book> PopularBooks()
         {
             var books = this.Set<Book>()
                 .OrderByDescending(b => b.Clients.Count)
@@ -146,11 +146,8 @@ namespace FinalWork
         }
 
 
+       
 
-        public BookShopDbContext()
-        {
-            this.Database.EnsureCreated();
-        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -177,8 +174,7 @@ namespace FinalWork
 
             modelBuilder.Entity<Author>()
                 .HasOne(a => a.Country)
-                .WithMany(c => c.Authors)
-                .HasForeignKey(a => a.CountryId);
+                .WithMany(c => c.Authors);
 
             modelBuilder.Entity<Author>()
                 .HasMany(a => a.Followers)
@@ -252,6 +248,14 @@ namespace FinalWork
             modelBuilder.Entity<Client>()
                 .HasMany(c => c.FollowedAuthors)
                 .WithMany(a => a.Followers);
+
+
+            modelBuilder.SeedPublishers();
+            modelBuilder.SeedAuthor();
+            modelBuilder.SeedGenres();
+            modelBuilder.SeedCountries();
+            modelBuilder.SeedBooks();
+            modelBuilder.SeedClients();
 
 
 
