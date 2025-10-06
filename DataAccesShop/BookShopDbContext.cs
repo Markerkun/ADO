@@ -84,10 +84,11 @@ namespace FinalWork
 
         public void ShowAllBooks()
         {
-            var books = this.Set<Book>().Include(b=>b.Author).ToList();
+            var books = this.Set<Book>().Include(b=>b.Author).Include(b=>b.Genre).Include(b=>b.NextChapter).Include(b => b.Publisher).ToList();
             foreach (var book in books)
             {
                 Console.WriteLine(book);
+                Console.WriteLine("\n--------------------\n");
             }
         }
 
@@ -97,7 +98,7 @@ namespace FinalWork
 
 
 
-        public void FindBookByName(string name)
+        public void FindBooksByTitle(string name)
         {
             var books = this.Set<Book>()
                 .Where(b => b.Title.Contains(name))
@@ -136,7 +137,7 @@ namespace FinalWork
             return books;
         }
 
-        public List<Book> PopularBooks()
+        public List<Book> ShowPopularBooks()
         {
             var books = this.Set<Book>()
                 .OrderByDescending(b => b.Clients.Count)
@@ -152,7 +153,7 @@ namespace FinalWork
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;
-                                        Initial Catalog = MusicalShop;
+                                        Initial Catalog = BookShop;
                                         Integrated Security=True;
                                         Connect Timeout=5;
                                         Encrypt=False;Trust Server Certificate=False;
