@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using FinalWork.Entities;
+using DataAccesShop.Entities;
 using DataAccesShop.Helpers;
 
-namespace FinalWork
+namespace DataAccesShop
 {
     public class BookShopDbContext : DbContext
     {

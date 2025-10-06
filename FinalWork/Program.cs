@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using FinalWork;
-using FinalWork.Entities;
+using DataAccesShop;
+using DataAccesShop.Entities;
 using Microsoft.EntityFrameworkCore;
 
 

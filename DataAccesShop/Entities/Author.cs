@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalWork.Entities
+namespace DataAccesShop.Entities
 {
     public class Author
     {

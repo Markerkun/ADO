@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using FinalWork.Entities;
+using DataAccesShop.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccesShop.Helpers
@@ -81,6 +81,14 @@ namespace DataAccesShop.Helpers
             modelBuilder.Entity<Client>().HasData(new Client[]
             {
                 new Client { Id = 1, FullName = "George Paterson", PhoneNumber = "+12345678901234", Email = "User123@gmail.com" }
+
+            });
+        }
+        public static void SeedReservedBooks(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ReservedBooks>().HasData(new ReservedBooks[]
+            {
+                new ReservedBooks { Id = 1, BookId = 1, ClientId = 1, ReservedAt = DateTime.Now.AddDays(-2) }
 
             });
         }
